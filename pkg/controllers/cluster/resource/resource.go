@@ -478,7 +478,7 @@ func sysctlInitContainer(sysctls []string) *corev1.Container {
 		Command: []string{
 			"/bin/sh",
 			"-c",
-			fmt.Sprintf("sysctl -w %s", strings.Join(sysctls, " ")),
+			fmt.Sprintf("sysctl -e -w %s", strings.Join(sysctls, " ")),
 		},
 	}
 }
