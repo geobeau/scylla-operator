@@ -1,5 +1,5 @@
 ---
-{{- if .Values.serviceAccount.create -}}
+{{- if .Values.serviceAccount.create }}
 apiVersion: v1
 kind: ServiceAccount
 metadata:
@@ -137,4 +137,3 @@ subjects:
   - kind: ServiceAccount
     name: {{ include "scylla-operator.serviceAccountName" . }}
     namespace: {{ .Release.Namespace }}
----
