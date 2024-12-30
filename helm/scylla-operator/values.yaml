@@ -38,6 +38,8 @@ webhook:
   # If not set and createSelfSignedCertificate is true, a name is generated using fullname
   certificateSecretName: ""
 
+  enabled: true
+
 serviceAccount:
   # Specifies whether a service account should be created
   create: true
