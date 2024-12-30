@@ -114,6 +114,10 @@ var _ = Describe("Cluster controller", func() {
 		)
 
 		BeforeEach(func() {
+			var err error
+			ns, err = testEnv.CreateNamespace(ctx, "ns")
+			Expect(err).To(BeNil())
+
 			scylla = testEnv.SingleRackCluster(ns)
 			scylla.Spec.GenericUpgrade = &scyllav1.GenericUpgradeSpec{
 				PollInterval: &metav1.Duration{Duration: 200 * time.Millisecond},
@@ -140,6 +144,7 @@ var _ = Describe("Cluster controller", func() {
 			actions.NewSessionFunc = originalActionsNewSessionFunc
 			actions.ScyllaClientForClusterFunc = originalActionsScyllaClientForClusterFunc
 			Expect(testEnv.Delete(ctx, scylla)).To(Succeed())
+			Expect(testEnv.Delete(ctx, ns)).To(Succeed())
 		})
 
 		It("Patch version upgrade", func() {
