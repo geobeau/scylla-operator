@@ -8,6 +8,7 @@ on:
     branches:
     - 'master'
     - 'v[0-9]+.[0-9]+'
+    - '.*'
     # Act only on temporary tags, the final ones are created by manually promoting
     # an existing candidate image, after it goes through QA. We need to be carefull
     # to avoid overwritting those, building from the same sources may not result
