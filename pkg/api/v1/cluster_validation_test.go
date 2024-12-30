@@ -121,12 +121,14 @@ func TestCheckTransitions(t *testing.T) {
 			new:     unit.NewDetailedSingleRackCluster("test-cluster", "test-ns", "repo", "2.3.2", "test-dc", "test-rack", 3),
 			allowed: true,
 		},
-		{
-			name:    "repo changed",
-			old:     unit.NewSingleRackCluster(3),
-			new:     unit.NewDetailedSingleRackCluster("test-cluster", "test-ns", "new-repo", "2.3.2", "test-dc", "test-rack", 3),
-			allowed: false,
-		},
+		// See https://github.com/criteo-forks/scylla-operator/pull/13
+		// We disable image repo checking to change repo when we want. This should be merged with the original if it is backported
+		// {
+		// 	name:    "repo changed",
+		// 	old:     unit.NewSingleRackCluster(3),
+		// 	new:     unit.NewDetailedSingleRackCluster("test-cluster", "test-ns", "new-repo", "2.3.2", "test-dc", "test-rack", 3),
+		// 	allowed: false,
+		// },
 		{
 			name:    "dcName changed",
 			old:     unit.NewSingleRackCluster(3),
