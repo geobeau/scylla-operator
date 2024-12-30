@@ -218,6 +218,10 @@ var _ = Describe("Cluster controller", func() {
 		)
 
 		BeforeEach(func() {
+			var err error
+			ns, err = testEnv.CreateNamespace(ctx, "ns")
+			Expect(err).To(BeNil())
+
 			scylla = testEnv.SingleRackCluster(ns)
 
 			Expect(testEnv.Create(ctx, scylla)).To(Succeed())
@@ -237,6 +241,7 @@ var _ = Describe("Cluster controller", func() {
 
 		AfterEach(func() {
 			Expect(testEnv.Delete(ctx, scylla)).To(Succeed())
+			Expect(testEnv.Delete(ctx, ns)).To(Succeed())
 		})
 
 		It("replace non seed node", func() {
@@ -248,6 +253,8 @@ var _ = Describe("Cluster controller", func() {
 
 			serviceToReplace := services[0]
 			replacedServiceIP := serviceToReplace.Spec.ClusterIP
+			_, ok := serviceToReplace.Labels[naming.SeedLabel]
+			Expect(!ok)
 
 			serviceToReplace.Labels[naming.ReplaceLabel] = ""
 			Expect(testEnv.Update(ctx, &serviceToReplace)).To(Succeed())
