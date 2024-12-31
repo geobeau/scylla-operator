@@ -1,4 +1,5 @@
-apiVersion: admissionregistration.k8s.io/v1beta1
+{{- if .Values.webhook.enabled }}
+apiVersion: admissionregistration.k8s.io/v1
 kind: ValidatingWebhookConfiguration
 metadata:
   annotations:
@@ -12,15 +13,19 @@ webhooks:
       name: {{ include "scylla-operator.fullname" . }}
       namespace: {{ .Release.Namespace }}
       path: /validate-scylla-scylladb-com-v1-scyllacluster
+  admissionReviewVersions:
+  - v1
+  sideEffects: None
   failurePolicy: Fail
   name: webhook.scylla.scylladb.com
   rules:
-    - apiGroups:
-        - scylla.scylladb.com
-      apiVersions:
-        - v1
-      operations:
-        - CREATE
-        - UPDATE
-      resources:
-        - scyllaclusters
+  - apiGroups:
+    - scylla.scylladb.com
+    apiVersions:
+    - v1
+    operations:
+    - CREATE
+    - UPDATE
+    resources:
+    - scyllaclusters
+{{- end }}
