@@ -27,13 +27,21 @@ func DatacenterLabels(c *scyllav1.ScyllaCluster) map[string]string {
 }
 
 // RackLabels returns a map of label keys and values
-// for the given Rack.
+// for the given Rack to be used on selectors and pods
 func RackLabels(r scyllav1.RackSpec, c *scyllav1.ScyllaCluster) map[string]string {
 	recLabels := recommendedLabels()
 	rackLabels := DatacenterLabels(c)
 	rackLabels[RackNameLabel] = r.Name
 
 	return mergeLabels(rackLabels, recLabels)
+}
+
+// PodSpecLabels returns a map of label keys and values
+// for the given Rack to be used on pods
+func PodSpecLabels(r scyllav1.RackSpec, c *scyllav1.ScyllaCluster) map[string]string {
+	rackLabels := RackLabels(r, c)
+
+	return mergeLabels(rackLabels, r.CustomLabels)
 }
 
 // StatefulSetPodLabel returns a map of labels to uniquely

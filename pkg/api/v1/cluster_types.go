@@ -213,6 +213,8 @@ type RackSpec struct {
 	ScyllaConfig string `json:"scyllaConfig"`
 	// Scylla config map name to customize scylla manager agent
 	ScyllaAgentConfig string `json:"scyllaAgentConfig"`
+	// Labels to add on the pods
+	CustomLabels map[string]string `json:"customLabels"`
 }
 
 type PlacementSpec struct {

@@ -185,6 +185,11 @@ spec:
                         name:
                           description: Name of the Scylla Rack. Used in the cassandra-rackdc.properties file.
                           type: string
+                        customLabels:
+                          description: Labels to add on the pods
+                          additionalProperties:
+                            type: string
+                          type: object
                         placement:
                           description: Placement describes restrictions for the nodes Scylla is scheduled on.
                           properties:

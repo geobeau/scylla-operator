@@ -2,10 +2,11 @@ package resource
 
 import (
 	"fmt"
-	"github.com/pkg/errors"
 	"path"
 	"strconv"
 	"strings"
+
+	"github.com/pkg/errors"
 
 	scyllav1 "github.com/scylladb/scylla-operator/pkg/api/v1"
 	"github.com/scylladb/scylla-operator/pkg/cmd/scylla-operator/options"
@@ -180,7 +181,7 @@ func StatefulSetForRack(r scyllav1.RackSpec, c *scyllav1.ScyllaCluster, sidecarI
 			// Template for Pods
 			Template: corev1.PodTemplateSpec{
 				ObjectMeta: metav1.ObjectMeta{
-					Labels: rackLabels,
+					Labels: naming.PodSpecLabels(r, c),
 					Annotations: map[string]string{
 						naming.PrometheusScrapeAnnotation: naming.LabelValueTrue,
 						naming.PrometheusPortAnnotation:   "9180",
